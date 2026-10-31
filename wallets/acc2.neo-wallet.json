@@ -1,0 +1,29 @@
+{
+  "name": "acc2",
+  "version": "1.0",
+  "scrypt": {
+    "n": 16384,
+    "r": 8,
+    "p": 8,
+    "size": 64
+  },
+  "accounts": [
+    {
+      "address": "NSvWJbkoYYJV6Ncna5hvo6qoNW6Db6ahqn",
+      "label": "Default account",
+      "isDefault": true,
+      "lock": false,
+      "key": "6PYNKJocXY7KFbShaK2f9ZtPVXKxVSwkKHrTwUFa6ZofcKQt99Sae1fh9g",
+      "contract": {
+        "script": "DCECO5sDQKkddzA7vKIZ6uvwssGYE96C3unJY9o1Z/fqMpRBVuezJw==",
+        "parameters": [
+          {
+            "name": "signature",
+            "type": "Signature"
+          }
+        ],
+        "deployed": false
+      }
+    }
+  ]
+}

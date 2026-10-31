@@ -1,0 +1,23 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Installing
+      - cd frontend && npm install && cd ..
+      - pip install qrcode pillow --target backend/qr_package
+  build:
+    commands:
+      - echo Building
+      - cd frontend && npm run build && cd ..
+      - zip -j backend/create_url.zip backend/create_url.py
+      - zip -j backend/redirect_url.zip backend/redirect_url.py
+      - zip -j backend/get_analytics.zip backend/get_analytics.py
+      - cp backend/generate_qr.py backend/qr_package/ && cd backend/qr_package && zip -r ../generate_qr.zip . && cd ../..
+  post_build:
+    commands:
+      - echo Deploying
+      - aws s3 sync frontend/build s3://shorturl-frontend-444134576508 --delete
+      - aws lambda update-function-code --function-name shorturl-create --zip-file fileb://backend/create_url.zip --region ap-south-1
+      - aws lambda update-function-code --function-name shorturl-redirect --zip-file fileb://backend/redirect_url.zip --region ap-south-1
+      - aws lambda update-function-code --function-name shorturl-analytics --zip-file fileb://backend/get_analytics.zip --region ap-south-1
+      - aws lambda update-function-code --function-name shorturl-qr --zip-file fileb://backend/generate_qr.zip --region ap-south-1
